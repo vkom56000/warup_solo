@@ -48,6 +48,52 @@ function initializeTaskList() {
                     // Create a new list element for the task
                     const item = document.createElement("li");
                     item.innerHTML = `
+                        <label class=${task.status === 'complete' ? 'strikethrough' : ''}>
+                            <input type="checkbox" onclick="taskOnClick(event)" ${task.status === "complete" ? "checked": ""}>
+                            ${task.description}
+
+                        </label>
+                        <hr>
+                    `;
+                    //Append the item to the unordered list
+                    dailyTask.appendChild(item);
+                });
+                tasksList.appendChild(dailyTask);
+
+            });
+        })
+
+        // Handle any errors
+        .catch(error => console.error("Error", error));
+
+}
+
+function taskOnClick(event) {
+	if (event.target.checked) {
+		event.target.parentElement.classList.add("strikethrough");
+	} else {
+		event.target.parentElement.classList.remove("strikethrough");
+	}
+}
+
+initializeTaskList();
+                const formattedDate = formatDate(entry.date);
+                // Create a new div for each day's tasks
+                const dailyTask = document.createElement("div");
+                dailyTask.className = "task-container";
+                
+                // Create a new list element for the date
+                const date = document.createElement("h3");
+                date.innerHTML = formattedDate;
+                
+                // Append the date to the dailyTask div
+                dailyTask.appendChild(date);
+
+                // Loop through each task
+                entry.tasks.forEach(task => {
+                    // Create a new list element for the task
+                    const item = document.createElement("li");
+                    item.innerHTML = `
                         <label>
                             <input type="checkbox" ${task.status === "complete" ? "checked": ""}>
                             ${task.description}
